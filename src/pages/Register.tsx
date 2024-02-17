@@ -5,7 +5,7 @@ import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../redux/features/auth/authApi";
 import RegisterForm from "../components/Forms/RegisterForm";
-import PrimaryInput from "../components/Inputs/PrimaryInput";
+import PrimaryInput from "../components/Inputs/CWInput";
 import Title from "antd/es/typography/Title";
 
 type ErrorSource = {

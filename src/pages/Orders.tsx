@@ -1,11 +1,13 @@
-import { Spin, Table } from "antd";
+import { Select, Spin, Table } from "antd";
 import { useGetOrdersQuery } from "../redux/features/sales/sales.api";
 import { useAppSelector } from "../redux/hook";
 import dayjs from "dayjs";
+import { useState } from "react";
 
 const Orders = () => {
+  const [duration, setDuratoin] = useState("Yearly");
   const { user } = useAppSelector((state) => state.auth);
-  const { data, isLoading, isSuccess } = useGetOrdersQuery(user?._id);
+  const { data, isLoading, isSuccess } = useGetOrdersQuery({id:user?._id, duration});
     
 
   const columns = [
@@ -47,7 +49,7 @@ const Orders = () => {
       title: "Date Ordered",
       dataIndex: "dateOrdered",
       key: "dateOrdered",
-      render: (date: any) => dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
+      render: (date: any) => dayjs(date)?.format("YYYY-MM-DD HH:mm:ss"),
     },
   ];
 
@@ -67,6 +69,34 @@ const Orders = () => {
           <Spin />
         </div>
       )}
+
+{isSuccess && (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "end",
+            margin: "20px 0",
+          }}
+        >
+          <Select
+            defaultValue="Yearly"
+            style={{ width: 180 }}
+            onChange={(e) => setDuratoin(e)}
+            aria-required
+            options={[
+              { value: "Yearly", label: "Yearly" },
+              { value: "Monthly", label: "Monthly" },
+              { value: "Weekly", label: "Weekly" },
+              { value: "Daily", label: "Daily" },
+            ]}
+          />
+        </div>
+      )}
+
+
+
+
       {isSuccess && (
         <Table
           style={{ overflow: "auto" }}

@@ -21,7 +21,7 @@ const UpdateProductModal = ({
 }: UpdateProductModalProps) => {
   const [productImage, setProductImage] = useState<Partial<File | null>>(null);
   const [selectedDate, setSelectedDate] = useState<string>(
-    dayjs(product?.releaseDate).format("YYYY-MM-DD")
+    dayjs(product?.releaseDate)?.format("YYYY-MM-DD")
   );
   const { handleSubmit, register } = useForm<TProduct>();
   const [compatibility, setCompatibility] = useState("Windows");
@@ -110,7 +110,7 @@ const UpdateProductModal = ({
                   width: "100%",
                   padding: "10px",
                   borderRadius: "5px",
-                  border: "0.1px solid gray",
+                  border: "2px solid #777777",
                   outline: "0",
                 }}
                 type="text"

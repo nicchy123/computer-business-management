@@ -1,8 +1,5 @@
 import { Card, Button, Popconfirm } from "antd";
 import { TProduct } from "../types/types";
-import { useCreateSaleMutation } from "../redux/features/sales/sales.api";
-import { useAppSelector } from "../redux/hook";
-import { useCurrentUser } from "../redux/features/auth/authSlice";
 import { toast } from "sonner";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -10,6 +7,7 @@ import PrimaryModal from "./modal/PrimaryModal";
 import { useDeleteProductMutation } from "../redux/features/products/prodcuts.api";
 import UpdateProductModal from "./modal/UpdateProductModal";
 import DuplicateModal from "./modal/DuplicateModal";
+import PurchaseModal from "./modal/PurchaseModal";
 
 const ProductCard = ({
   product,
@@ -23,39 +21,11 @@ const ProductCard = ({
   const [modalOpen, setmodalOpen] = useState(false);
   const [updateModalOpen, setupdateModalOpen] = useState(false);
   const [duplicateModalOpen, setduplicateModalOpen] = useState(false);
-  const { name, price, quantity, seller, productImage } = product;
-  const [loadingId, setLoadingid] = useState("");
-  const dateString = new Date().toString();
-  const [createSale, { isLoading: buynowLoading }] = useCreateSaleMutation();
+  const { name, price, quantity, productImage } = product;
   const [deleteProduct, { isSuccess, isLoading }] = useDeleteProductMutation();
-  const user = useAppSelector(useCurrentUser);
-
-  const handleOrder = async (product: TProduct) => {
-   try{
-    setLoadingid(product._id);
-    const data = {
-      product: product._id,
-      quantity: 1,
-      seller: seller?._id,
-      buyer: user?._id,
-      dateOrdered: dateString,
-    };
-    const res = await createSale(data).unwrap();
-
-    if (res?.success) {
-      setLoadingid("");
-      toast.success("Items added successfully");
-    }
-   }catch(err){
-    setLoadingid("");
-    toast.error("Something went wrong");
-   }
-  };
 
   const confirm = async (id: string) => {
-    setLoadingid(id);
     await deleteProduct(id);
-    setLoadingid("");
     if (isSuccess) {
       return toast.success("Items deleted successfully");
     }
@@ -103,24 +73,19 @@ const ProductCard = ({
         </div>
         <div
           style={{
-            marginTop:"10px",
+            marginTop: "10px",
             display: "flex",
             flexWrap: "wrap",
             gap: "5px",
             justifyContent: "start",
           }}
         >
-          <Button
-          size="small"
-            onClick={() => handleOrder(product)}
-            type="primary"
-            key="addToCart"
-            disabled={buynowLoading}
-          >
-            {buynowLoading ? "Processing..." : "Buy Now"}
-          </Button>
+          <PurchaseModal product={product} />
+
           <Link to={`/details/${product._id}`}>
-            <Button size="small" key="viewDetails">View</Button>
+            <Button size="small" key="viewDetails">
+              View
+            </Button>
           </Link>
           {product?._id && (
             <DuplicateModal
@@ -152,7 +117,9 @@ const ProductCard = ({
             okText="Yes"
             cancelText="No"
           >
-            <Button size="small" key="delete">{isLoading ? "Deleting" : "Delete"}</Button>
+            <Button size="small" key="delete">
+              {isLoading ? "Deleting" : "Delete"}
+            </Button>
           </Popconfirm>
         </div>
       </div>

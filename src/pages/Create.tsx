@@ -1,6 +1,6 @@
-import { Col, Row, Select, Upload, message } from "antd";
+import { Col, Row, Select } from "antd";
 import PrimaryForm from "../components/Forms/PrimaryForm";
-import PrimaryInput from "../components/Inputs/PrimaryInput";
+import PrimaryInput from "../components/Inputs/CWInput";
 import { FieldValues } from "react-hook-form";
 import { useAddProductMutation } from "../redux/features/products/prodcuts.api";
 import Button from "../components/ui/Button";
@@ -8,13 +8,12 @@ import { DatePicker } from "antd";
 import type { DatePickerProps, GetProps, UploadProps } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
-import { EventHandler, useState } from "react";
+import {  useState } from "react";
 import { useAppSelector } from "../redux/hook";
 import { useCurrentUser } from "../redux/features/auth/authSlice";
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 import uploadImage from "../utils/upLoadPhoto";
 import { toast } from "sonner";
-import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 type ValidationErrors = Record<string, string>;
 const Create = () => {
@@ -32,14 +31,14 @@ const Create = () => {
   const presentDate = dayjs();
   const [addProduct, { error }] = useAddProductMutation();
   const [selectedDate, setSelectedDate] = useState<string | [string, string]>(
-    dayjs(new Date()).format("YYYY-MM-DD")
+    dayjs(new Date())?.format("YYYY-MM-DD")
   );
   const navigate = useNavigate();
   const onChange = (
     value: DatePickerProps["value"] | RangePickerProps["value"],
     dateString: [string, string] | string
   ) => {
-    const date = dayjs(JSON.stringify(dateString)).format("YYYY-MM-DD");
+    const date = dayjs(JSON.stringify(dateString))?.format("YYYY-MM-DD");
     setSelectedDate(date);
   };
 

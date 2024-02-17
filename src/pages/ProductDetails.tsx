@@ -91,7 +91,7 @@ const ProductDetails = () => {
                         value?.name
                       : key === "releaseDate"
                       ? // @ts-ignore
-                        dayjs(value?.ReleaseDate).format("YY-MM-DD")
+                        dayjs(value?.ReleaseDate)?.format("YY-MM-DD")
                       : value}
                   </Descriptions.Item>
                 )

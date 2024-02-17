@@ -35,7 +35,7 @@ const DuplicateModal = ({
   const [addProduct] = useAddProductMutation();
   const [productImage, setProductImage] = useState<Partial<File | null>>(null);
   const [selectedDate, setSelectedDate] = useState<string>(
-    dayjs(product?.releaseDate).format("YYYY-MM-DD")
+    dayjs(product?.releaseDate)?.format("YYYY-MM-DD")
   );
 
   const user = useAppSelector(useCurrentUser);
@@ -44,7 +44,7 @@ const DuplicateModal = ({
     value: DatePickerProps["value"] | RangePickerProps["value"],
     dateString: string
   ) => {
-    const date = dayjs(JSON.stringify(dateString)).format("YYYY-MM-DD");
+    const date = dayjs(JSON.stringify(dateString))?.format("YYYY-MM-DD");
     setSelectedDate(date);
   };
 

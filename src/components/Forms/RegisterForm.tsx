@@ -12,7 +12,7 @@ type TFormProps = {
   style?: any;
 };
 
-const RegisterForm = ({ children, onSubmit, style }: TFormProps) => {
+const CWForm = ({ children, onSubmit, style }: TFormProps) => {
 
 
   const methods = useForm();
@@ -25,4 +25,4 @@ const RegisterForm = ({ children, onSubmit, style }: TFormProps) => {
   );
 };
 
-export default RegisterForm;
+export default CWForm;

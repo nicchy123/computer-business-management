@@ -12,7 +12,6 @@ const Sales = () => {
     duration,
   });
 
-
   const columns = [
     {
       title: "Product Image",
@@ -52,7 +51,7 @@ const Sales = () => {
       title: "Date Ordered",
       dataIndex: "dateOrdered",
       key: "dateOrdered",
-      render: (date: any) => dayjs(date).format("YYYY-MM-DD HH:mm:ss"),
+      render: (date: any) => dayjs(date)?.format("YYYY-MM-DD HH:mm:ss"),
     },
   ];
 
@@ -80,9 +79,7 @@ const Sales = () => {
             margin: "20px 0",
           }}
         >
-         
-
-<Select
+          <Select
             defaultValue="Yearly"
             style={{ width: 180 }}
             onChange={(e) => setDuratoin(e)}
@@ -91,10 +88,9 @@ const Sales = () => {
               { value: "Yearly", label: "Yearly" },
               { value: "Monthly", label: "Monthly" },
               { value: "Weekly", label: "Weekly" },
-              { value: "Daily", label: "Daily" }
+              { value: "Daily", label: "Daily" },
             ]}
           />
-         
         </div>
       )}
 

@@ -10,7 +10,7 @@ type TInputProps = {
 }
 
 
-const PrimaryInput = ({ name, type, label, placeholder, labelColor }:TInputProps) => {
+const CWInput = ({ name, type, label, placeholder, labelColor }:TInputProps) => {
   return (
     <div style={{ color:"white", width:"100%"}}>
         <label style={{marginBottom:"20px", marginLeft:"3px", color:`${labelColor}`}}>{label}</label>
@@ -20,7 +20,6 @@ const PrimaryInput = ({ name, type, label, placeholder, labelColor }:TInputProps
         }}
         render={({ field }) => (
           <Input
-          
             {...field}
             type={type}
             placeholder={placeholder}
@@ -35,4 +34,4 @@ const PrimaryInput = ({ name, type, label, placeholder, labelColor }:TInputProps
   );
 };
 
-export default PrimaryInput;
+export default CWInput;

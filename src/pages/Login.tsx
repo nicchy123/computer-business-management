@@ -1,6 +1,6 @@
-import { Row, message } from "antd";
+import { Row, Typography, message } from "antd";
 import PrimaryForm from "../components/Forms/PrimaryForm";
-import PrimaryInput from "../components/Inputs/PrimaryInput";
+import PrimaryInput from "../components/Inputs/CWInput";
 import { FieldValues } from "react-hook-form";
 import Button from "../components/ui/Button";
 import { useAppDispatch } from "../redux/hook";
@@ -43,16 +43,19 @@ const Login = () => {
         align={"middle"}
         style={{ background: "white", color:"black", display: "flex", flexDirection: "column", gap: "10px", padding: "50px", borderRadius:"10px" }}
       >
-        <h1
+        <Typography
+          
           style={{
             margin: 0,
             textAlign: "center",
             paddingTop: "10px",
             paddingBottom: "10px",
+            fontSize:"1.5rem",
+            fontWeight:"bold",
           }}
         >
           Login To ComputerZone
-        </h1>
+        </Typography>
         <PrimaryForm style={{width:"100%", display:"flex", flexDirection:"column", gap:"5px"}} onSubmit={onsubmit}>
           <PrimaryInput
             type="email"
@@ -68,15 +71,15 @@ const Login = () => {
             label="Password"
             labelColor="black"
           />
-
+         {/* @ts-ignore */}
+         <p style={{ color: "red" }}> {error?.data?.message as string}</p>
           <p style={{ margin:"10px 0", textAlign:"center" }}>
             New to computerZone? {""}
             <Link to={"/register"} style={{ color: "green", cursor: "pointer" }}>
               Register
             </Link>
           </p>
-          {/* @ts-ignore */}
-          <p style={{ color: "red" }}> {error?.data?.message as string}</p>
+ 
           <div style={{ display: "flex", justifyContent: "center" }}>
             <Button type="submit">Login</Button>
           </div>
