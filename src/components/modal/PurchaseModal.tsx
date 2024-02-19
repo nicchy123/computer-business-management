@@ -29,7 +29,6 @@ const PurchaseModal = ({ product }: { product: TProduct }) => {
   const handleOk = async () => {
     setConfirmLoading(true);
     const res = (await createSale(purchaseData)) as any;
-    console.log(res?.data);
     setConfirmLoading(false);
     if (res?.data?.success) {
       toast.success(`${product?.name} ordered successfully`);
@@ -38,7 +37,6 @@ const PurchaseModal = ({ product }: { product: TProduct }) => {
   };
 
   const handleCancel = () => {
-    console.log("Clicked cancel button");
     setOpen(false);
   };
 

@@ -24,7 +24,6 @@ const Register: React.FC = () => {
   );
 
   const onsubmit = async (data: FieldValues) => {
-    console.log(data);
     try {
       const userInfo = {
         name: data.name as string,
@@ -32,7 +31,6 @@ const Register: React.FC = () => {
         password: data.password as string,
         role
       };
-      console.log(userInfo);
       const result = await registerUser(userInfo).unwrap();
       if (result.success) {
         navigate("/login");
@@ -55,7 +53,6 @@ const Register: React.FC = () => {
   ];
 
   const handleUserRole = ({ target: { value } }: RadioChangeEvent) => {
-    console.log("radio3 checked", value);
     setRole(value);
   };
 

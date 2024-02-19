@@ -62,7 +62,6 @@ const UpdateProductModal = ({
         const imgData = await uploadImage("updateImage");
         data.productImage = imgData?.url;
       }
-      console.log(data)
 
       const res = await updateProduct(data).unwrap();
 

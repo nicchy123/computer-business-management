@@ -26,7 +26,6 @@ const RequestService = () => {
       toast.success("Service Request created successfully");
       navigate("/");
     }
-    console.log(res);
   };
   return (
     <div>
