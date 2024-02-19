@@ -10,6 +10,7 @@ import { useGetSingleProductsQuery } from "../redux/features/products/prodcuts.a
 import dayjs from "dayjs";
 import DuplicateModal from "../components/modal/DuplicateModal";
 import PrimaryModal from "../components/modal/PrimaryModal";
+import PurchaseModal from "../components/modal/PurchaseModal";
 
 const ProductDetails = () => {
   const [modalOpen, setmodalOpen] = useState(false);
@@ -104,14 +105,7 @@ const ProductDetails = () => {
         style={{ marginTop: "20px", textAlign: "center", marginBottom: "20px" }}
       >
         <Space>
-          <Button
-            size="small"
-            disabled={loadingId === product?._id}
-            onClick={() => handleOrder(product)}
-            type="primary"
-          >
-            {loadingId === product?._id ? "Processing..." : "Buy Now"}
-          </Button>
+       {product && <PurchaseModal product={product} />}
           {product?._id && (
             <DuplicateModal
               modalOpen={duplicateModalOpen}

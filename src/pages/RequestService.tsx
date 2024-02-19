@@ -72,6 +72,7 @@ const RequestService = () => {
           <TextArea
             onChange={(e: any) => setDetails(e.target.value)}
             size="large"
+            required
           />
           <Button color="blue" htmlType="submit">
             Submit
