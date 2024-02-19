@@ -8,7 +8,7 @@ const Orders = () => {
   const [duration, setDuratoin] = useState("Yearly");
   const { user } = useAppSelector((state) => state.auth);
   const { data, isLoading, isSuccess } = useGetOrdersQuery({id:user?._id, duration});
-    
+    console.log(data)
 
   const columns = [
     {

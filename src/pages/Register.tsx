@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form";
 import Button from "../components/ui/Button";
 import { useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../redux/features/auth/authApi";
-import RegisterForm from "../components/Forms/RegisterForm";
+import RegisterForm from "../components/Forms/CWForm";
 import PrimaryInput from "../components/Inputs/CWInput";
 import Title from "antd/es/typography/Title";
 

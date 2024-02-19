@@ -20,7 +20,7 @@ export const SalesApi = baseApi.injectEndpoints({
 
     getOrders: builder.query({
       query: ({id, duration}) => ({
-        url: `/sales/${id}/${duration}`,
+        url: `/sales/my-orders/${id}/${duration}`,
       }),
       providesTags: ['sales'],
     }),

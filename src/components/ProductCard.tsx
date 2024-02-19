@@ -8,6 +8,9 @@ import { useDeleteProductMutation } from "../redux/features/products/prodcuts.ap
 import UpdateProductModal from "./modal/UpdateProductModal";
 import DuplicateModal from "./modal/DuplicateModal";
 import PurchaseModal from "./modal/PurchaseModal";
+import { useAppSelector } from "../redux/hook";
+import { TUser, useCurrentUserToken } from "../redux/features/auth/authSlice";
+import { verifyToken } from "../utils/verifyToken";
 
 const ProductCard = ({
   product,
@@ -36,6 +39,13 @@ const ProductCard = ({
   ) => {
     e!.preventDefault();
   };
+
+
+
+  const userToken = useAppSelector(useCurrentUserToken);
+  const {role} = verifyToken(userToken!) as TUser;
+
+
 
   return (
     <Card
@@ -87,14 +97,14 @@ const ProductCard = ({
               View
             </Button>
           </Link>
-          {product?._id && (
+          {product?._id && role == "seller" && (
             <DuplicateModal
               modalOpen={duplicateModalOpen}
               setmodalOpen={setduplicateModalOpen}
               product={product}
             />
           )}
-          {product?._id && (
+          {product?._id && role == "seller" && (
             <PrimaryModal
               modalOpen={modalOpen}
               setmodalOpen={setmodalOpen}

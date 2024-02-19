@@ -12,7 +12,7 @@ type TFormProps = {
   style?: any;
 };
 
-const PrimaryForm = ({ children, onSubmit, style }: TFormProps) => {
+export  const PrimaryForm = ({ children, onSubmit, style }: TFormProps) => {
 
 
   const methods = useForm({

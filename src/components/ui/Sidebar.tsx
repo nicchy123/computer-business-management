@@ -9,8 +9,9 @@ import {
 import { DesktopOutlined, LogoutOutlined } from "@ant-design/icons";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hook";
-import { logout, useCurrentUser } from "../../redux/features/auth/authSlice";
+import { TUser, logout, useCurrentUser, useCurrentUserToken } from "../../redux/features/auth/authSlice";
 import { useGetUserQuery } from "../../redux/features/auth/authApi";
+import { verifyToken } from "../../utils/verifyToken";
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -50,6 +51,7 @@ type TSidebar = {
   icon?: React.ReactNode;
   items?: MenuItem[];
   path?: string;
+  role?: string[];
 
 };
 
@@ -58,6 +60,10 @@ const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(useCurrentUser);
+  const userToken = useAppSelector(useCurrentUserToken);
+  const {role} = verifyToken(userToken!) as TUser;
+
+
   const { data } = useGetUserQuery(user?.email);
 
   const confirm = (
@@ -75,28 +81,43 @@ const Sidebar = () => {
       icon: <DesktopOutlined />,
       label: "Home",
       path: "/",
+      role: ["buyer", "seller"]
     },
     {
       key: "/sales",
       icon: <LineChartOutlined />,
       label: "Sales",
       path: "/sales",
+      role:["seller"]
     },
     {
       key: "/orders",
       icon: <CheckCircleOutlined />,
       label: "Orders",
       path: "/orders",
+      role: ["buyer"]
     },
     {
       key: "/create",
       icon: <UndoOutlined />,
       label: "Create",
       path: "/create",
+      role: ["seller"]
+    },
+    {
+      key: "/request-service",
+      icon: <UndoOutlined />,
+      label: "Request Service",
+      path: "/request-service",
+      role: ["buyer"]
     },
   ];
 
-  const items = sidebarItems.map((item: any) => getItem(item));
+  const items = sidebarItems.map((item: any) => {
+    if (item.role.includes( role)) {
+      return getItem(item)
+    }
+  });
 
   return (
     <Sider

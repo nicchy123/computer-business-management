@@ -8,6 +8,7 @@ import Sales from "../pages/Sales";
 import Orders from "../pages/Orders";
 import Create from "../pages/Create";
 import ProductDetails from "../pages/ProductDetails";
+import RequestService from "../pages/RequestService";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
       {
         path: '/create',
         element: <Create />,
+      },
+      {
+        path: '/request-service',
+        element: <RequestService />,
       },
       {
         path: '/details/:id',

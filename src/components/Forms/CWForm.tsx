@@ -12,8 +12,7 @@ type TFormProps = {
   style?: any;
 };
 
-const CWForm = ({ children, onSubmit, style }: TFormProps) => {
-
+export const CWForm = ({ children, onSubmit, style }: TFormProps) => {
 
   const methods = useForm();
   return (

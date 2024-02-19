@@ -56,7 +56,7 @@ const Login = () => {
         >
           Login To ComputerZone
         </Typography>
-        <PrimaryForm style={{width:"100%", display:"flex", flexDirection:"column", gap:"5px"}} onSubmit={onsubmit}>
+        <PrimaryForm style={{width:"100%", display:"flex", flexDirection:"column", gap:"10px"}} onSubmit={onsubmit}>
           <PrimaryInput
             type="email"
             name="email"
@@ -73,7 +73,7 @@ const Login = () => {
           />
          {/* @ts-ignore */}
          <p style={{ color: "red" }}> {error?.data?.message as string}</p>
-          <p style={{ margin:"10px 0", textAlign:"center" }}>
+          <p style={{  textAlign:"center" }}>
             New to computerZone? {""}
             <Link to={"/register"} style={{ color: "green", cursor: "pointer" }}>
               Register
