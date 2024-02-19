@@ -8,13 +8,17 @@ import dayjs from "dayjs";
 import { useCreateServiceRequestMutation } from "../redux/features/serviceRequest/serviceRequest.api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../redux/hook";
+import { useCurrentUser } from "../redux/features/auth/authSlice";
 
 const RequestService = () => {
+  const userData = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
   const [createServiceRequest] = useCreateServiceRequestMutation();
   const [date, setDate] = useState("");
   const [details, setDetails] = useState("");
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    data.user = userData!._id;
     data.details = details;
     data.serviceDateAndTime = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
     const res = (await createServiceRequest(data)) as any;
