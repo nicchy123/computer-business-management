@@ -26,7 +26,7 @@ const CWInput = ({ name, type, label, placeholder, labelColor }:TInputProps) => 
             placeholder={placeholder}
             allowClear
             width={"800px"}
-            style={{padding:"10px" , marginTop:"5px", width:"100%", border:"1px solid gray", }}
+            style={{padding:"10px" , marginTop:"2px", width:"100%", border:"1px solid gray", }}
           />
           </Form.Item>
         )}

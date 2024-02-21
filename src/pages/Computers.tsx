@@ -236,7 +236,7 @@ const Computers = () => {
 
       <div style={{ display: "inline", margin: "50px 0" }}></div>
       {products?.length < 1 && (
-        <p style={{ textAlign: "center", width: "100vw", fontSize: "20px" }}>
+        <p style={{ textAlign: "center", fontSize: "20px" }}>
           No Items found
         </p>
       )}
