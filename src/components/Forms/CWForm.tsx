@@ -14,7 +14,7 @@ type TFormProps = {
 
 export const CWForm = ({ children, onSubmit, style }: TFormProps) => {
   const methods = useForm();
-
+  
   return (
     <FormProvider {...methods}>
       <Form style={style} onFinish={methods.handleSubmit(onSubmit)}>

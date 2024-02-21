@@ -21,9 +21,8 @@ const RequestService = () => {
   const userData = useAppSelector(useCurrentUser);
   const formData = useFormContext<FieldValues>();
   const { data } = useGetServiceRequestQuery(userData?._id);
-  console.log(data)
   const [createServiceRequest, { error }] = useCreateServiceRequestMutation();
-
+  const methods = useFormContext();
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const requestData = {
       ...data,
@@ -32,9 +31,10 @@ const RequestService = () => {
         "YYYY-MM-DD HH:mm:ss"
       ),
     };
-    console.log(requestData);
     const res = (await createServiceRequest(requestData)) as any;
+    console.log(res)
     if (res?.data?.success) {
+      methods.reset();
       toast.success("Service Request created successfully");
     }
   };
@@ -43,24 +43,28 @@ const RequestService = () => {
     <div style={{ margin: "10px 0" }}>
       <h1>Requested Services</h1>
       <Row
-        gutter={[10, 10]}
+        gutter={[20, 0]}
         style={{
           background: "#233E43",
           padding: "20px",
           margin: "10px",
           borderRadius: "10px",
+
         }}
         justify={"start"}
         align={"middle"}
       >
         {data?.data?.map((item: any, index: number) => (
-          <Col key={index} lg={6} md={12} style={{ marginBottom: "20px" }}>
+          <Col   key={index} lg={6} md={12} style={{ marginBottom: "20px",    width: "100%", }}>
             <div
               style={{
                 background: index % 2 === 0 ? "lightgray" : "gray",
                 padding: "15px",
                 borderRadius: "8px",
                 boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+                width: "100%",
+                height: "100%",
+                overflow: "hidden"
               }}
             >
               <div
@@ -68,9 +72,11 @@ const RequestService = () => {
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
+                  overflow: "hidden",
+                  width: "100%",
                 }}
               >
-                <p style={{ margin: 0, fontWeight: "bold", fontSize: "18px" }}>
+                <p style={{ margin: 0, fontWeight: "bold", fontSize: "18px",  }}>
                   {item?.brand}
                 </p>
                 <p style={{ margin: 0, color: "black" }}>
