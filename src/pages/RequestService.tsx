@@ -5,7 +5,10 @@ import TextArea from "antd/es/input/TextArea";
 import CWInput from "../components/Inputs/CWInput";
 import { useState } from "react";
 import dayjs from "dayjs";
-import { useCreateServiceRequestMutation } from "../redux/features/serviceRequest/serviceRequest.api";
+import {
+  useCreateServiceRequestMutation,
+  useGetServiceRequestQuery,
+} from "../redux/features/serviceRequest/serviceRequest.api";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hook";
@@ -14,7 +17,9 @@ import { useCurrentUser } from "../redux/features/auth/authSlice";
 const RequestService = () => {
   const userData = useAppSelector(useCurrentUser);
   const navigate = useNavigate();
-  const [createServiceRequest] = useCreateServiceRequestMutation();
+  const data = useGetServiceRequestQuery(userData?._id);
+  console.log(data)
+  const [createServiceRequest, { error }] = useCreateServiceRequestMutation();
   const [date, setDate] = useState("");
   const [details, setDetails] = useState("");
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -32,6 +37,9 @@ const RequestService = () => {
       <h1 style={{ textAlign: "center", margin: "20px 0" }}>
         Request a service
       </h1>
+
+      <Row></Row>
+
       <Row justify={"center"}>
         <CWForm
           style={{
@@ -44,18 +52,26 @@ const RequestService = () => {
         >
           <CWInput
             name="name"
-            placeholder="Computer Name"
+            placeholder="Your Computer Name"
             type="text"
             key={"name"}
-            label="Computer Name"
+            label="Your Computer Name"
             labelColor="black"
           />
           <CWInput
             name="brand"
-            placeholder="Computer Brand Name"
+            placeholder="Your Computer Brand Name"
             type="text"
             key={"brand"}
-            label="Computer Brand Name"
+            label="Your Computer Brand"
+            labelColor="black"
+          />
+          <CWInput
+            name="sellerEmail"
+            placeholder="Your Computer Seller Email"
+            type="email"
+            key={"email"}
+            label="Your Computer Seller Email"
             labelColor="black"
           />
 
@@ -73,6 +89,7 @@ const RequestService = () => {
             size="large"
             required
           />
+          {error && <p style={{color:"red"}}>{(error as any).data?.message}</p>}
           <Button color="blue" htmlType="submit">
             Submit
           </Button>

@@ -18,31 +18,8 @@ const ProductDetails = () => {
   const params = useParams();
   const { data, isLoading, isError } = useGetSingleProductsQuery(params?.id);
   const product = data?.data;
-  const [loadingId, setLoadingId] = useState("");
-  const dateString = new Date().toString();
-  const [createSale] = useCreateSaleMutation();
-  const user = useAppSelector(useCurrentUser);
 
-  const handleOrder = async (product: TProduct) => {
-    try {
-      setLoadingId(product?._id);
-      const data = {
-        product: product?._id,
-        quantity: 1,
-        seller: product?.seller?._id,
-        buyer: user?._id,
-        dateOrdered: dateString,
-      };
-      const res = await createSale(data).unwrap();
-      if (res?.success) {
-        setLoadingId("");
-        toast.success("Items added successfully");
-      }
-    } catch (error) {
-      console.error("Error while processing order:", error);
-      setLoadingId("");
-    }
-  };
+
 
   return (
     <div style={{ maxWidth: "800px", margin: "0 auto" }}>
@@ -79,6 +56,7 @@ const ProductDetails = () => {
         >
           <Descriptions title="Product Details">
             {Object.entries(product || {}).map(
+              
               ([key, value]: [string, unknown]) =>
                 key !== "_id" &&
                 key !== "__v" &&
@@ -89,7 +67,7 @@ const ProductDetails = () => {
                   >
                     {key === "seller"
                       ? // @ts-ignore
-                        value?.name
+                        value?.email
                       : key === "releaseDate"
                       ? // @ts-ignore
                         dayjs(value?.ReleaseDate)?.format("YY-MM-DD")

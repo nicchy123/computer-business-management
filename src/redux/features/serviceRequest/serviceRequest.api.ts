@@ -9,9 +9,15 @@ const serviceRequestApi  = baseApi.injectEndpoints({
           body: data,
         }),
       }),
+
+      getServiceRequest: builder.query({
+        query: (id) => ({
+          url: `/computers/service-requests/${id}`,
+        }),
+      }),
       }),
 
      
 })
 
-export const { useCreateServiceRequestMutation  } = serviceRequestApi;
+export const { useCreateServiceRequestMutation, useGetServiceRequestQuery  } = serviceRequestApi;

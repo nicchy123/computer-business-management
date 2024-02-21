@@ -8,7 +8,7 @@ import { DatePicker } from "antd";
 import type { DatePickerProps, GetProps, UploadProps } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/zh-cn";
-import {  useState } from "react";
+import { useState } from "react";
 import { useAppSelector } from "../redux/hook";
 import { useCurrentUser } from "../redux/features/auth/authSlice";
 type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
@@ -63,7 +63,7 @@ const Create = () => {
       setLoading(false);
       if (result?.success as boolean) {
         setLoading(false);
-        navigate("/")
+        navigate("/");
         return toast.success("Your Product Created Successfully");
       }
     } catch (err: any) {
@@ -87,7 +87,7 @@ const Create = () => {
         gap: "5px",
         justifyContent: "center",
         alignItems: "center",
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
       onSubmit={onsubmit}
     >
@@ -97,7 +97,7 @@ const Create = () => {
           border: "1px solid black",
           borderRadius: "10px",
           padding: "30px 0",
-          color:"white"
+          color: "white",
         }}
         justify={"center"}
         align={"middle"}
@@ -116,8 +116,8 @@ const Create = () => {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "3px",
-      
+              gap: "5px",
+              marginTop: "10px",
             }}
           >
             <label>Product Image</label>
@@ -135,7 +135,9 @@ const Create = () => {
                 width: "100%",
               }}
             />
-            <p style={{ color: "#561C24", fontWeight:900 }}>{validationErrors["productImage"]}</p>
+            <p style={{ color: "yellow", fontWeight: 900 }}>
+              {validationErrors["productImage"]}
+            </p>
           </div>
           <PrimaryInput
             type="number"
@@ -143,33 +145,37 @@ const Create = () => {
             placeholder="price"
             label="Price"
           />
-          <p style={{ color: "red" }}>{validationErrors["price"]}</p>
-          <PrimaryInput
-            type="number"
-            name="quantity"
-            placeholder="quantity"
-            label="Quantity"
-          />
-          <label htmlFor="brand">Brand</label>
-          <br />
-          <Select
-            defaultValue="Apple"
-            style={{ width: "100%", height: "40px" }}
-            onChange={(e) => setBrand(e)}
-            aria-required
-            options={[
-              { value: "Apple", label: "Apple" },
-              { value: "Dell", label: "Dell" },
-              { value: "HP", label: "HP" },
-              { value: "Lenovo", label: "Lenovo" },
-              { value: "ASUS", label: "ASUS" },
-              { value: "Acer", label: "Acer" },
-              { value: "Microsoft", label: "Microsoft" },
-              { value: "Toshiba", label: "Toshiba" },
-              { value: "Sony", label: "Sony" },
-              { value: "MSI ", label: "MSI " },
-            ]}
-          />
+          <p style={{ color: "yellow" }}>{validationErrors["price"]}</p>
+          <div style={{ marginTop: "10px" }}>
+            <PrimaryInput
+              type="number"
+              name="quantity"
+              placeholder="quantity"
+              label="Quantity"
+            />
+          </div>
+          <div style={{ marginTop: "10px" }}>
+            <label htmlFor="brand">Brand</label>
+            <br />
+            <Select
+              defaultValue="Apple"
+              style={{ width: "100%", height: "40px" }}
+              onChange={(e) => setBrand(e)}
+              aria-required
+              options={[
+                { value: "Apple", label: "Apple" },
+                { value: "Dell", label: "Dell" },
+                { value: "HP", label: "HP" },
+                { value: "Lenovo", label: "Lenovo" },
+                { value: "ASUS", label: "ASUS" },
+                { value: "Acer", label: "Acer" },
+                { value: "Microsoft", label: "Microsoft" },
+                { value: "Toshiba", label: "Toshiba" },
+                { value: "Sony", label: "Sony" },
+                { value: "MSI ", label: "MSI " },
+              ]}
+            />
+          </div>
           <p style={{ color: "red" }}>{validationErrors["brand"]}</p>
           <div style={{ width: "100%", margin: "14px 0" }}>
             <label htmlFor="Compatibility">Compatibility</label>
@@ -297,7 +303,6 @@ const Create = () => {
           {loading ? "Processing..." : "Create"}
         </Button>
       </div>
-
     </PrimaryForm>
   );
 };
