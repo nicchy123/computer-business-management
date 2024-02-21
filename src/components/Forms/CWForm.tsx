@@ -1,6 +1,6 @@
+import { Form } from "antd";
 import { ReactNode } from "react";
 import {
-  FieldValues,
   FormProvider,
   SubmitHandler,
   useForm,
@@ -8,20 +8,21 @@ import {
 
 type TFormProps = {
   children: ReactNode;
-  onSubmit: SubmitHandler<FieldValues>;
+  onSubmit: SubmitHandler<any>;
   style?: any;
 };
 
 export const CWForm = ({ children, onSubmit, style }: TFormProps) => {
-
   const methods = useForm();
+
   return (
     <FormProvider {...methods}>
-      <form style={style} onSubmit={methods.handleSubmit(onSubmit)}>
+      <Form style={style} onFinish={methods.handleSubmit(onSubmit)}>
         {children}
-      </form>
+      </Form>
     </FormProvider>
   );
 };
 
 export default CWForm;
+

@@ -1,4 +1,4 @@
-import { Input } from "antd";
+import { Form, Input } from "antd";
 import { Controller } from "react-hook-form";
 
 type TInputProps = {
@@ -19,7 +19,8 @@ const CWInput = ({ name, type, label, placeholder, labelColor }:TInputProps) => 
           required: true,
         }}
         render={({ field }) => (
-          <Input
+          <Form.Item>
+            <Input
             {...field}
             type={type}
             placeholder={placeholder}
@@ -27,6 +28,7 @@ const CWInput = ({ name, type, label, placeholder, labelColor }:TInputProps) => 
             width={"800px"}
             style={{padding:"10px" , marginTop:"5px", width:"100%", border:"1px solid gray", }}
           />
+          </Form.Item>
         )}
         name={name}
       />

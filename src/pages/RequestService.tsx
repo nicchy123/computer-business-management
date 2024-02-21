@@ -1,60 +1,105 @@
-import { FieldValues, SubmitHandler, useFormContext } from "react-hook-form";
-import CWForm from "../components/Forms/CWForm";
-import { Button, DatePicker, Input, Row } from "antd";
+import {
+  Controller,
+  FieldValues,
+  SubmitHandler,
+  useFormContext,
+} from "react-hook-form";
+import { Button, Col, DatePicker, Row } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import CWInput from "../components/Inputs/CWInput";
-import { useState } from "react";
 import dayjs from "dayjs";
 import {
   useCreateServiceRequestMutation,
   useGetServiceRequestQuery,
 } from "../redux/features/serviceRequest/serviceRequest.api";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../redux/hook";
 import { useCurrentUser } from "../redux/features/auth/authSlice";
+import CWForm from "../components/Forms/CWForm";
 
 const RequestService = () => {
   const userData = useAppSelector(useCurrentUser);
-  const navigate = useNavigate();
-  const data = useGetServiceRequestQuery(userData?._id);
+  const formData = useFormContext<FieldValues>();
+  const { data } = useGetServiceRequestQuery(userData?._id);
   console.log(data)
   const [createServiceRequest, { error }] = useCreateServiceRequestMutation();
-  const [date, setDate] = useState("");
-  const [details, setDetails] = useState("");
+
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    data.user = userData!._id;
-    data.details = details;
-    data.serviceDateAndTime = dayjs(date).format("YYYY-MM-DD HH:mm:ss");
-    const res = (await createServiceRequest(data)) as any;
+    const requestData = {
+      ...data,
+      user: userData!._id,
+      serviceDateAndTime: dayjs(data.serviceDateAndTime).format(
+        "YYYY-MM-DD HH:mm:ss"
+      ),
+    };
+    console.log(requestData);
+    const res = (await createServiceRequest(requestData)) as any;
     if (res?.data?.success) {
       toast.success("Service Request created successfully");
-      navigate("/");
     }
   };
+
   return (
-    <div>
+    <div style={{ margin: "10px 0" }}>
+      <h1>Requested Services</h1>
+      <Row
+        gutter={[10, 10]}
+        style={{
+          background: "#233E43",
+          padding: "20px",
+          margin: "10px",
+          borderRadius: "10px",
+        }}
+        justify={"start"}
+        align={"middle"}
+      >
+        {data?.data?.map((item: any, index: number) => (
+          <Col key={index} lg={6} md={12} style={{ marginBottom: "20px" }}>
+            <div
+              style={{
+                background: index % 2 === 0 ? "lightgray" : "gray",
+                padding: "15px",
+                borderRadius: "8px",
+                boxShadow: "0px 0px 10px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <p style={{ margin: 0, fontWeight: "bold", fontSize: "18px" }}>
+                  {item?.brand}
+                </p>
+                <p style={{ margin: 0, color: "black" }}>
+                  {item?.serviceDateAndTime}
+                </p>
+              </div>
+              <p>{item?.details?.slice(0, 50) + "..."}</p>
+            </div>
+          </Col>
+        ))}
+      </Row>
       <h1 style={{ textAlign: "center", margin: "20px 0" }}>
         Request a service
       </h1>
-
-      <Row></Row>
-
       <Row justify={"center"}>
         <CWForm
+          onSubmit={onSubmit}
           style={{
             width: "70%",
             display: "flex",
             flexDirection: "column",
             gap: "10px",
+            marginBottom:"10px"
           }}
-          onSubmit={onSubmit}
         >
           <CWInput
             name="name"
             placeholder="Your Computer Name"
             type="text"
-            key={"name"}
             label="Your Computer Name"
             labelColor="black"
           />
@@ -62,7 +107,6 @@ const RequestService = () => {
             name="brand"
             placeholder="Your Computer Brand Name"
             type="text"
-            key={"brand"}
             label="Your Computer Brand"
             labelColor="black"
           />
@@ -70,26 +114,35 @@ const RequestService = () => {
             name="sellerEmail"
             placeholder="Your Computer Seller Email"
             type="email"
-            key={"email"}
             label="Your Computer Seller Email"
             labelColor="black"
           />
-
           <>
-            <label htmlFor="Describe">Service Date & Time</label>
+            <label htmlFor="serviceDateAndTime">Service Date & Time</label>
+
             <DatePicker
-              onChange={(e: any) => setDate(e)}
-              defaultValue={dayjs(Date.now())}
+              {...formData?.register("serviceDateAndTime")}
+              defaultValue={dayjs(new Date())}
+              onChange={() => console.log("hi")}
               showTime
             />
           </>
-          <label htmlFor="Describe">Describe</label>
-          <TextArea
-            onChange={(e: any) => setDetails(e.target.value)}
-            size="large"
-            required
+
+          <label htmlFor="details">Describe</label>
+          <Controller
+            name="details"
+            rules={{ required: true }}
+            render={({ field }) => (
+              <TextArea
+                {...field}
+                {...formData?.register("details")}
+                size="large"
+              />
+            )}
           />
-          {error && <p style={{color:"red"}}>{(error as any).data?.message}</p>}
+
+          {error && <p style={{color:"red"}}> {(error as any)?.data?.message}</p>}
+
           <Button color="blue" htmlType="submit">
             Submit
           </Button>
